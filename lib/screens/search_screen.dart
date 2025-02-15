@@ -20,6 +20,8 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   bool isSearchingAlbums = true; // Toggle between albums & artists
+  bool albumTapped = false;
+  bool artistTaped = false;
  final TextEditingController searchController = TextEditingController();
   @override
   void initState() {
@@ -53,9 +55,13 @@ class _SearchScreenState extends State<SearchScreen> {
                 onChanged: (searchString){
                  setState(() {
                    if(searchString.isNotEmpty){
+                     artistTaped = false;
+                     albumTapped = false;
                      if(isSearchingAlbums){
+                       albumTapped = true;
                        BlocProvider.of<AlbumController>(context, listen: false).onSearchChanged(searchString);
                      }else{
+                       artistTaped = true;
                        BlocProvider.of<ArtistController>(context, listen: false).onSearchChanged(searchString);
                      }
                    }
@@ -76,16 +82,18 @@ class _SearchScreenState extends State<SearchScreen> {
                   onChange: (index){
                     setState(() {
                       isSearchingAlbums = index == 0;
-                      if(isSearchingAlbums){
+                      if(isSearchingAlbums && !albumTapped){
+                        albumTapped = true;
                         BlocProvider.of<AlbumController>(context, listen: false).onSearchChanged(searchController.text);
-                      }else{
+                      }else if(!artistTaped){
+                        artistTaped = true;
                         BlocProvider.of<ArtistController>(context, listen: false).onSearchChanged(searchController.text);
                       }
                     });
                   },
                   children: [
                      AlbumGrid(query: searchController.text,),
-                     ArtistList()
+                     ArtistList(query: searchController.text,)
                   ],
                 ),
               )

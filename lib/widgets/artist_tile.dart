@@ -12,9 +12,9 @@ class ArtistTile extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Row(
         children: [
-          displayImage(artist.images?.firstOrNull,radius: 30),
+          displayImage(artist.images?.firstOrNull?.url,radius: 30),
           SizedBox(width: 20,),
-          appText("${artist.name}",color: Colors.white,size: 166,weight: FontWeight.w600)
+          appText("${artist.name}",color: Colors.white,size: 16,weight: FontWeight.w600)
         ],
       ),
     );

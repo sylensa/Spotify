@@ -9,8 +9,9 @@ import 'package:spotify/widgets/artist_tile.dart';
 import 'package:spotify/widgets/smart_refresh.dart';
 
 class ArtistList extends StatefulWidget {
+  final String query;
+  const ArtistList({super.key, required this.query});
 
-  const ArtistList({super.key,});
 
   @override
   State<ArtistList> createState() => _ArtistListState();
@@ -24,8 +25,12 @@ class _ArtistListState extends State<ArtistList> {
     return BlocBuilder<ArtistController,ArtistState>(builder: (context,state){
       if(state is ArtistLoaded){
         return SmartRefresh(
-          onRefresh: BlocProvider.of<ArtistController>(context, listen: false).onRefresh ,
-          onLoading:  BlocProvider.of<ArtistController>(context, listen: false).onLoading,
+          onRefresh: (){
+            BlocProvider.of<ArtistController>(context, listen: false).onRefresh(_refreshController,widget.query);
+          } ,
+          onLoading: (){
+            BlocProvider.of<ArtistController>(context, listen: false).onLoading(_refreshController,widget.query);
+          },
           refreshController: _refreshController,
           child: ListView.builder(
             itemCount: state.artists.length,
