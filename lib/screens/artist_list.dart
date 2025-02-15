@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:spotify/controllers/artist/artist_controller.dart';
+import 'package:spotify/controllers/artist/artist_state.dart';
 import 'package:spotify/core/helper/helper.dart';
+import 'package:spotify/widgets/artist_shimmering.dart';
 import 'package:spotify/widgets/smart_refresh.dart';
 
 class ArtistList extends StatefulWidget {
-  final List artists;
 
-  const ArtistList({super.key, required this.artists});
+  const ArtistList({super.key,});
 
   @override
   State<ArtistList> createState() => _ArtistListState();
@@ -19,22 +20,40 @@ class _ArtistListState extends State<ArtistList> {
 
   @override
   Widget build(BuildContext context) {
-    return SmartRefresh(
-      onRefresh: BlocProvider.of<ArtistController>(context, listen: false).onRefresh ,
-      onLoading:  BlocProvider.of<ArtistController>(context, listen: false).onLoading,
-      refreshController: _refreshController,
-      child: ListView.builder(
-        itemCount: widget.artists.length,
-        itemBuilder: (context, index) {
-          final artist = widget.artists[index];
-          return ListTile(
-            leading: CircleAvatar(
-              backgroundImage: NetworkImage(artist["images"].isNotEmpty ? artist["images"][0]["url"] : ""),
-            ),
-            title: Text(artist["name"]),
-          );
-        },
-      ),
-    );
+    return BlocBuilder<ArtistController,ArtistState>(builder: (context,state){
+      if(state is ArtistLoaded){
+        return SmartRefresh(
+          onRefresh: BlocProvider.of<ArtistController>(context, listen: false).onRefresh ,
+          onLoading:  BlocProvider.of<ArtistController>(context, listen: false).onLoading,
+          refreshController: _refreshController,
+          child: ListView.builder(
+            itemCount: state.artists.length,
+            itemBuilder: (context, index) {
+              final artist = state.artists[index];
+              return ListTile(
+                leading: displayImage(artist.images?.firstOrNull,radius: 30),
+                title: appText("${artist.name}",color: Colors.white,size: 166,weight: FontWeight.w600),
+              );
+            },
+          ),
+        );
+      }
+      else if(state is ArtistInitial){
+        return ListView.builder(
+          itemCount: 10,
+          itemBuilder: (context, index) {
+            return ArtistShimmering();
+          },
+        );
+
+      }
+      else if(state is ArtistEmpty){
+        return Center(child: appText("No data",color: Colors.white,size: 16,weight: FontWeight.w600),);
+      }
+      else{
+       return SizedBox.shrink();
+      }
+
+    });
   }
 }
