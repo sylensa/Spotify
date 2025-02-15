@@ -4,6 +4,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:spotify/controllers/album/album_controller.dart';
 import 'package:spotify/controllers/album/album_state.dart';
 import 'package:spotify/core/helper/helper.dart';
+import 'package:spotify/widgets/album_card.dart';
 import 'package:spotify/widgets/album_shimmering.dart';
 import 'package:spotify/widgets/smart_refresh.dart';
 
@@ -33,19 +34,7 @@ class _AlbumGridState extends State<AlbumGrid> {
             ),
             itemBuilder: (context, index) {
               final album = state.albums[index];
-              return Card(
-                child: Column(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(5),
-                      child: displayImage(album.images?.firstOrNull, height: 100,radius: 0),
-                    ),
-                    appText(album.name,),
-                    appText("${album.artists?.first.name}"),
-                    appText("${album.releaseDate?.split("-")[0]}"), // Year
-                  ],
-                ),
-              );
+              return AlbumCard(album: album,);
             },
           ),
         );

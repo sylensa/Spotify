@@ -5,6 +5,7 @@ import 'package:spotify/controllers/artist/artist_controller.dart';
 import 'package:spotify/controllers/artist/artist_state.dart';
 import 'package:spotify/core/helper/helper.dart';
 import 'package:spotify/widgets/artist_shimmering.dart';
+import 'package:spotify/widgets/artist_tile.dart';
 import 'package:spotify/widgets/smart_refresh.dart';
 
 class ArtistList extends StatefulWidget {
@@ -30,10 +31,7 @@ class _ArtistListState extends State<ArtistList> {
             itemCount: state.artists.length,
             itemBuilder: (context, index) {
               final artist = state.artists[index];
-              return ListTile(
-                leading: displayImage(artist.images?.firstOrNull,radius: 30),
-                title: appText("${artist.name}",color: Colors.white,size: 166,weight: FontWeight.w600),
-              );
+              return ArtistTile(artist: artist,);
             },
           ),
         );
