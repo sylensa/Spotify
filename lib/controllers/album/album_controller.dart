@@ -6,8 +6,6 @@ import 'package:spotify/controllers/album/album_state.dart';
 import 'package:spotify/models/album_model.dart';
 import 'package:spotify/repository/album_repo.dart';
 
-
-
 class AlbumController extends Cubit<AlbumState>{
   AlbumController() : super(AlbumEmpty());
  List<Album> albums = [];
@@ -22,7 +20,11 @@ class AlbumController extends Cubit<AlbumState>{
     }
     List<Album> listAlbums  = await albumRepo.searchAlbum(query: query);
     albums.addAll(listAlbums);
-    emit(AlbumLoaded(albums: albums));
+    if(albums.isNotEmpty){
+      emit(AlbumLoaded(albums: albums));
+    }else{
+      emit(AlbumEmpty());
+    }
   }
   onSearchChanged(String value) async{
     if (_debounce?.isActive ?? false) _debounce!.cancel();

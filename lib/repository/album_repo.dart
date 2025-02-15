@@ -15,7 +15,7 @@ class AlbumRepo{
   Future<List<Album>> searchAlbum({String? query, String? type = "album"}) async {
     try {
       var response = await _http.getRequest("${AppUrl.albumArtistSearchUrl}?q=$query&type=$type",);
-      log("(response :$response");
+      log("response :$response");
       AlbumModels? albumModel = AlbumModels.fromJson(response);
       if (albumModel.albums?.items?.isNotEmpty == true) {
         return albumModel.albums!.items!;

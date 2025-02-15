@@ -9,14 +9,14 @@ ArtistModel artistModelFromJson(String str) => ArtistModel.fromJson(json.decode(
 String artistModelToJson(ArtistModel data) => json.encode(data.toJson());
 
 class ArtistModel {
-  Artists? artists;
+  ArtistData? artists;
 
   ArtistModel({
     this.artists,
   });
 
   factory ArtistModel.fromJson(Map<String, dynamic> json) => ArtistModel(
-    artists: json["artists"] == null ? null : Artists.fromJson(json["artists"]),
+    artists: json["artists"] == null ? null : ArtistData.fromJson(json["artists"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -24,16 +24,16 @@ class ArtistModel {
   };
 }
 
-class Artists {
+class ArtistData {
   String? href;
   int? limit;
   String? next;
   int? offset;
   dynamic previous;
   int? total;
-  List<Item>? items;
+  List<Artist>? items;
 
-  Artists({
+  ArtistData({
     this.href,
     this.limit,
     this.next,
@@ -43,14 +43,14 @@ class Artists {
     this.items,
   });
 
-  factory Artists.fromJson(Map<String, dynamic> json) => Artists(
+  factory ArtistData.fromJson(Map<String, dynamic> json) => ArtistData(
     href: json["href"],
     limit: json["limit"],
     next: json["next"],
     offset: json["offset"],
     previous: json["previous"],
     total: json["total"],
-    items: json["items"] == null ? [] : List<Item>.from(json["items"]!.map((x) => Item.fromJson(x))),
+    items: json["items"] == null ? [] : List<Artist>.from(json["items"]!.map((x) => Artist.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -64,7 +64,7 @@ class Artists {
   };
 }
 
-class Item {
+class Artist {
   ExternalUrls? externalUrls;
   Followers? followers;
   List<String>? genres;
@@ -76,7 +76,7 @@ class Item {
   Type? type;
   String? uri;
 
-  Item({
+  Artist({
     this.externalUrls,
     this.followers,
     this.genres,
@@ -89,7 +89,7 @@ class Item {
     this.uri,
   });
 
-  factory Item.fromJson(Map<String, dynamic> json) => Item(
+  factory Artist.fromJson(Map<String, dynamic> json) => Artist(
     externalUrls: json["external_urls"] == null ? null : ExternalUrls.fromJson(json["external_urls"]),
     followers: json["followers"] == null ? null : Followers.fromJson(json["followers"]),
     genres: json["genres"] == null ? [] : List<String>.from(json["genres"]!.map((x) => x)),
