@@ -7,27 +7,33 @@ class ArtistShimmering extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: Shimmer.fromColors(
-        baseColor: Colors.grey,
-        highlightColor: Colors.white,
-        child:  Container(
-          padding: appPadding(20),
-          decoration: BoxDecoration(
-            color: Colors.grey,
-              shape: BoxShape.circle
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          Shimmer.fromColors(
+            baseColor: Colors.grey,
+            highlightColor: Colors.white,
+            child:  Container(
+              padding: appPadding(30),
+              decoration: BoxDecoration(
+                  color: Colors.grey,
+                  shape: BoxShape.circle
+              ),
+            ),
           ),
-        ),
-      ),
-      title: Shimmer.fromColors(
-        baseColor: Colors.grey,
-        highlightColor: Colors.white,
-        child: Container(
-          height: 15,
-          width: 100,
-          color: Colors.grey,
+          SizedBox(width: 20,),
+          Shimmer.fromColors(
+            baseColor: Colors.grey,
+            highlightColor: Colors.white,
+            child: Container(
+              height: 15,
+              width: 100,
+              color: Colors.grey,
 
-        ),
+            ),
+          )
+        ],
       ),
     );
 

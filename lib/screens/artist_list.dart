@@ -37,16 +37,18 @@ class _ArtistListState extends State<ArtistList> {
         );
       }
       else if(state is ArtistInitial){
-        return ListView.builder(
-          itemCount: 10,
-          itemBuilder: (context, index) {
-            return ArtistShimmering();
-          },
+        return Expanded(
+          child: ListView.builder(
+            itemCount: 10,
+            itemBuilder: (context, index) {
+              return ArtistShimmering();
+            },
+          ),
         );
 
       }
       else if(state is ArtistEmpty){
-        return Center(child: appText("No data",color: Colors.white,size: 16,weight: FontWeight.w600),);
+        return Expanded(child: Center(child: appText("No data",color: Colors.white,size: 16,weight: FontWeight.w600),));
       }
       else{
        return SizedBox.shrink();

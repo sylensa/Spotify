@@ -8,9 +8,15 @@ class ArtistTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: displayImage(artist.images?.firstOrNull,radius: 30),
-      title: appText("${artist.name}",color: Colors.white,size: 166,weight: FontWeight.w600),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          displayImage(artist.images?.firstOrNull,radius: 30),
+          SizedBox(width: 20,),
+          appText("${artist.name}",color: Colors.white,size: 166,weight: FontWeight.w600)
+        ],
+      ),
     );
   }
 }

@@ -40,20 +40,22 @@ class _AlbumGridState extends State<AlbumGrid> {
         );
       }
       else if(state is AlbumInitial){
-        return  GridView.builder(
-          itemCount:10,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, // 2 albums per row
-            childAspectRatio: 0.8,
+        return  Expanded(
+          child: GridView.builder(
+            itemCount:10,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2, // 2 albums per row
+              childAspectRatio: 0.8,
+            ),
+            itemBuilder: (context, index) {
+              return  AlbumShimmering();
+            },
           ),
-          itemBuilder: (context, index) {
-            return  AlbumShimmering();
-          },
         );
 
       }
       else if(state is AlbumEmpty){
-        return Center(child: appText("No data",color: Colors.white,size: 16,weight: FontWeight.w600),);
+        return Expanded(child: Center(child: appText("No data",color: Colors.white,size: 16,weight: FontWeight.w600),));
       }
       else{
         return SizedBox.shrink();
