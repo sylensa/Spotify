@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:spotify/core/helper/helper.dart';
 import 'package:spotify/models/album_model.dart';
@@ -8,19 +10,22 @@ class AlbumCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Colors.black,
-      child: Column(
-        children: [
-          Expanded(child: displayImage(album.images?.firstOrNull, height: 100,radius: 0)),
-          SizedBox(height: 10,),
-          appText(album.name,),
-          SizedBox(height: 5,),
-          appText("${album.artists?.first.name}"),
-          SizedBox(height: 5,),
-          appText("${album.releaseDate?.split("-")[0]}"), // Year
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Expanded(child: displayImage(album.images?.firstOrNull?.url, height: 200,radius: 0)),
+       Column(
+         crossAxisAlignment: CrossAxisAlignment.start,
+         children: [
+           SizedBox(height: 10,),
+           appText(album.name,color: Colors.white,weight: FontWeight.bold),
+           SizedBox(height: 5,),
+           appText("${album.artists?.first.name}",color: Colors.grey),
+           SizedBox(height: 5,),
+           appText("${album.releaseDate?.split("-")[0]}",color: Colors.grey),
+         ],
+       ) // Year
+      ],
     );
   }
 }

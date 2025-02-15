@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spotify/controllers/album/album_controller.dart';
 import 'package:spotify/controllers/artist/artist_controller.dart';
+import 'package:spotify/controllers/authentication/authentication_controller.dart';
 import 'package:spotify/core/helper/helper.dart';
 import 'package:spotify/core/tab_bar_controller.dart';
 import 'package:spotify/screens/album_grid.dart';
@@ -23,6 +24,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void initState() {
     super.initState();
+
   }
 
   @override
@@ -82,7 +84,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     });
                   },
                   children: [
-                     AlbumGrid(),
+                     AlbumGrid(query: searchController.text,),
                      ArtistList()
                   ],
                 ),

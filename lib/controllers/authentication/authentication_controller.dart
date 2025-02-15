@@ -15,7 +15,7 @@ class AuthenticationController extends Cubit<AuthenticationState> {
   Future<void> getSpotifyToken() async {
     try {
       emit(AuthenticationLoading());
-     String? token = await authenticationRepo.getSpotifyToken();
+     String? token = await authenticationRepo.getSpotifyAccessToken();
       emit(AuthenticationLoaded(token));
     } catch (_) {
       emit( AuthenticationEmpty());
