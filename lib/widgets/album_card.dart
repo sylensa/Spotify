@@ -9,14 +9,15 @@ class AlbumCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Colors.black,
       child: Column(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(5),
-            child: displayImage(album.images?.firstOrNull, height: 100,radius: 0),
-          ),
+          Expanded(child: displayImage(album.images?.firstOrNull, height: 100,radius: 0)),
+          SizedBox(height: 10,),
           appText(album.name,),
+          SizedBox(height: 5,),
           appText("${album.artists?.first.name}"),
+          SizedBox(height: 5,),
           appText("${album.releaseDate?.split("-")[0]}"), // Year
         ],
       ),
