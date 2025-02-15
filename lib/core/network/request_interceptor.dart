@@ -82,7 +82,7 @@ class HeadersInterceptor extends Interceptor {
   Future<String?> refreshAccessToken() async {
 
    try{
-     String? token  = await AuthenticationRepo().getSpotifyToken();
+     String? token  = await AuthenticationRepo().getSpotifyAccessToken();
      print("res object refreshToken:$token");
        await UserPreferences().setToken(token ?? "");
        return token;

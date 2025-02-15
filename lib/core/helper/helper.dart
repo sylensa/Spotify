@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 const String clientId = "3af8e17840684c5bb3325a5e8b8e808d";
-const String clientSecret = "e46b037b7f76416ca7e3ac9676f557f";
+const String clientSecret = "e46b037b7f76416ca7e3ac9676f557f7";
 final deviceType = getDeviceType();
 enum DeviceType { Phone, Tablet }
 
@@ -62,47 +62,30 @@ Widget displayImage(imagePath, {double radius = 30.0, double? height, double? wi
       height: height,
       width: width,
       placeholder: (context, url) {
-        return radius > 0
-            ? Container(
+        return Container(
           padding: const EdgeInsets.only(left: 10,right: 10,top: 10, bottom: 5),
-          width: 2* radius ,
-          height: 2* radius ,
-          decoration: const BoxDecoration(
-              shape: BoxShape.circle,
+          width: width ,
+          height: height ,
+          decoration:  BoxDecoration(
+              shape: radius > 0 ? BoxShape.circle :BoxShape.rectangle ,
               color: Colors.black26
           ),
 
-        )
-            : Container(
+        );
+        },
+      errorWidget: (context, url, error) {
+        return
+        Container(
           padding: const EdgeInsets.only(left: 10,right: 10,top: 10, bottom: 5),
-          width: radius ,
-          height: radius ,
+          width: width,
+          height: height,
           decoration:  BoxDecoration(
-              // shape: BoxShape.circle,
-              color: Colors.white,
-            borderRadius: BorderRadius.circular(5),
-            border: Border.all(color: Colors.grey.withOpacity(0.1))
+            shape: radius > 0 ? BoxShape.circle : BoxShape.rectangle,
+            color: Colors.black26,
+            border: Border.all(color: Colors.grey[100]!),
           ),
 
         );
-      },
-      errorWidget: (context, url, error) {
-        return radius > 0
-            ? Container(
-                padding: const EdgeInsets.only(left: 10,right: 10,top: 10, bottom: 5),
-                width: radius * 2,
-                height: radius * 2,
-                decoration:  BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.black26,
-                  border: Border.all(color: Colors.grey[100]!),
-                  image: const DecorationImage(image: AssetImage('assets/images/strade_base_logo.jpg'))
-                ),
-
-              )
-            : const Image(
-                image: AssetImage('assets/images/strade_base_logo.jpg'),
-              );
       },
       imageBuilder: (context, image) {
         return radius > 0

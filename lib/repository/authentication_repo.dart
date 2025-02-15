@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/services.dart';
+import 'package:http/http.dart';
 import 'package:spotify/core/helper/helper.dart';
 import 'package:spotify/core/http/http_client_wrapper.dart';
 import 'package:spotify/core/shared_preference.dart';
@@ -11,38 +12,43 @@ import 'package:spotify/core/utils/response_codes.dart';
 class AuthenticationRepo{
   final HttpClientWrapper _http = HttpClientWrapper();
   final userPreferences = UserPreferences();
-
- Future<String?> getSpotifyToken() async {
+  Future<String?> getSpotifyAccessToken() async {
+    String credentials = base64Encode(utf8.encode('$clientId:$clientSecret'));
+    Map<String, String> headers = {
+      'Authorization': 'Basic $credentials',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+    Map<String, String> body = {
+      'grant_type': 'client_credentials',
+    };
     try {
-      final credentials = base64Encode(
-        utf8.encode('${Uri.encodeComponent(clientId)}:${Uri.encodeComponent(clientSecret)}'), // Combine with a colon
+      final response = await post(
+        Uri.parse(AppUrl.spotifyTokenUrl),
+        headers: headers,
+        body: body,
       );
-      var response = await _http.postRequest(AppUrl.spotifyTokenUrl,
-        {"grant_type": "client_credentials",
-          "client_id": clientId,
-          "client_secret":clientSecret,
-        },
 
-        headers: {
-        'Authorization': 'Basic $credentials',
-        'Content-Type': 'application/x-www-form-urlencoded',
-
-        },
-      );
-      log("(response :$response");
-      if (response["status"] == AppResponseCodes.success) {
-        String? token = response['data']["toke"];
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        String? token = responseData['access_token'];
         await userPreferences.setToken(token ?? "");
         return token;
+      } else {
+        print('Error: ${response.statusCode}, ${response.body}');
+        return null;
       }
     } catch (e) {
-     log("error message:${e.toString()}");
+      print('Exception: $e');
+      return null;
     }
-
-    return null;
   }
 
 
 
 
 }
+
+
+
+
+

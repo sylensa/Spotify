@@ -76,6 +76,7 @@ class _SellItOptionsLabState extends State<SellItOptionsLab> {
                 ),
           ),
         ),
+        SizedBox(height: 20,),
         widget.children[childPosition]
       ],
     );

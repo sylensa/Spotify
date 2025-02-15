@@ -14,6 +14,9 @@ import 'package:spotify/screens/search_screen.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await FlavorSettings.init(FlavorType.DEV);
+ final toeks = await AuthenticationRepo().getSpotifyAccessToken();
+  print('toeks: $toeks');
+
   runApp(const MyApp());
 }
 
