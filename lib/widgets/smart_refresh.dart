@@ -4,17 +4,17 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:spotify/widgets/refresh_footer.dart';
 
 class SmartRefresh extends StatefulWidget {
-  final VoidCallback onRefresh;
-  final VoidCallback onLoading;
+  final Function onRefresh;
+  final Function onLoading;
   final Widget child;
-  const SmartRefresh({super.key, required this.onLoading, required this.onRefresh, required this.child});
+  final RefreshController refreshController;
+  const SmartRefresh({super.key, required this.onLoading, required this.onRefresh, required this.child,required this.refreshController});
 
   @override
   State<SmartRefresh> createState() => _SmartRefreshState();
 }
 
 class _SmartRefreshState extends State<SmartRefresh> {
-  final RefreshController _refreshController =  RefreshController(initialRefresh: false);
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +28,13 @@ class _SmartRefreshState extends State<SmartRefresh> {
           return RefreshFooter(mode: mode,);
           },
         ),
-        onLoading: widget.onLoading,
-        onRefresh: widget.onRefresh,
-        controller: _refreshController,
+        onLoading:(){
+          widget.onLoading();
+        },
+        onRefresh: (){
+          widget.onRefresh();
+        },
+        controller: widget.refreshController,
         child: widget.child,
       ),
     );
