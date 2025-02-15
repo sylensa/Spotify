@@ -82,8 +82,8 @@ class _SearchScreenState extends State<SearchScreen> {
                     });
                   },
                   children: [
-                     AlbumGrid(albums: []),
-                     ArtistList(artists: [])
+                     AlbumGrid(),
+                     ArtistList()
                   ],
                 ),
               )
