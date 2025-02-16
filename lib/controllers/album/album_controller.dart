@@ -7,7 +7,7 @@ import 'package:spotify/models/album_model.dart';
 import 'package:spotify/repository/album_repo.dart';
 
 class AlbumController extends Cubit<AlbumState>{
-  AlbumController() : super(AlbumEmpty());
+  AlbumController() : super(AlbumInitial());
  List<Album> albums = [];
   int page = 1;
   final albumRepo = AlbumRepo();

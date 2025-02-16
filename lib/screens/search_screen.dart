@@ -85,7 +85,8 @@ class _SearchScreenState extends State<SearchScreen> {
                       if(isSearchingAlbums && !albumTapped){
                         albumTapped = true;
                         BlocProvider.of<AlbumController>(context, listen: false).onSearchChanged(searchController.text);
-                      }else if(!artistTaped){
+                      }
+                      else if(!artistTaped){
                         artistTaped = true;
                         BlocProvider.of<ArtistController>(context, listen: false).onSearchChanged(searchController.text);
                       }

@@ -62,7 +62,6 @@ class _AlbumGridState extends State<AlbumGrid> {
             },
           ),
         );
-
       }
       else if(state is AlbumEmpty){
         return Expanded(child: Center(child: appText("No data",color: Colors.white,size: 16,weight: FontWeight.w600),));

@@ -9,7 +9,7 @@ import 'package:spotify/repository/artist_repo.dart';
 
 
 class ArtistController extends Cubit<ArtistState>{
-  ArtistController() : super(ArtistEmpty());
+  ArtistController() : super(ArtistInitial());
   List<Artist> artists = [];
   int page = 1;
   final artistRepo = ArtistRepo();
