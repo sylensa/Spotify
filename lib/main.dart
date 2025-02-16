@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spotify/controllers/album/album_controller.dart';
 import 'package:spotify/controllers/artist/artist_controller.dart';
 import 'package:spotify/controllers/authentication/authentication_controller.dart';
 import 'package:spotify/controllers/conectivity_controller/connectivity_cubit.dart';
 import 'package:spotify/core/helper/helper.dart';
+import 'package:spotify/core/shared_preference.dart';
 import 'package:spotify/flavor_settings.dart';
 import 'package:spotify/repository/authentication_repo.dart';
 import 'package:spotify/screens/search_screen.dart';
@@ -14,8 +16,9 @@ import 'package:spotify/screens/search_screen.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await FlavorSettings.init(FlavorType.DEV);
- final toeks = await AuthenticationRepo().getSpotifyAccessToken();
-  print('toeks: $toeks');
+  UserPreferences.prefs = await SharedPreferences.getInstance();
+  final token = await AuthenticationRepo().getSpotifyAccessToken();
+  print('token: $token');
 
   runApp(const MyApp());
 }
