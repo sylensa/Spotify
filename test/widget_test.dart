@@ -1,30 +1,29 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:spotify/main.dart';
+import 'package:spotify/models/album_model.dart' hide Artist;
+import 'package:spotify/models/artist_model.dart';
+import 'package:spotify/repository/album_repo.dart';
+import 'package:spotify/repository/artist_repo.dart';
+import 'package:spotify/repository/authentication_repo.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  group('Spotify API Tests', () {
+    test('Fetch Spotify token', () async {
+      final String? tokenString = await AuthenticationRepo().getSpotifyAccessToken();
+      expect(tokenString, isNotNull);
+    });
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    test('Search albums', () async {
+      List<Album> albums = await AlbumRepo().searchAlbum(query: "gnx",type: "album");
+      expect(albums, isNotEmpty);
+    });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    test('Search artists', () async {
+      List<Artist> artists = await ArtistRepo().searchArtist(query: "gnx",type: "album");
+      expect(artists, isNotEmpty);
+    });
   });
 }
